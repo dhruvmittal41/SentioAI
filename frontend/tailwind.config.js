@@ -10,6 +10,7 @@ export default {
         'night': '#04094f',
         'night2': '#4d096b',
         'night3': '#8b0567',
+        'offwhite': '#F5F5F4',
       },
       fontFamily: {
         dancing: ['Dancing Script', 'sans-serif'],

@@ -12,6 +12,7 @@ import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
+import { Link } from "react-router-dom";
 
 const mainListItems = [
   { text: "Home", icon: <HomeRoundedIcon /> },
@@ -27,12 +28,20 @@ const secondaryListItems = [
 ];
 
 export default function MenuContent() {
+  const handleclick = () => {
+    navigate(`/home/homepage`);
+  };
   return (
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: "space-between" }}>
       <List dense>
         {mainListItems.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: "block" }}>
-            <ListItemButton selected={index === 0}>
+            <ListItemButton
+              component={item.text === "Home" ? Link : "button"}
+              to={item.text === "Home" ? "/home/homepage" : undefined}
+              onClick={handleclick}
+              selected={index === 0}
+            >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>
@@ -42,7 +51,7 @@ export default function MenuContent() {
       <List dense>
         {secondaryListItems.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: "block" }}>
-            <ListItemButton>
+            <ListItemButton component={Link} to="/home" selected={index === 0}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>

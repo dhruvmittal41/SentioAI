@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
     'knox',
+    'django_rest_passwordreset',
 ]
 
 MIDDLEWARE = [
@@ -62,6 +65,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 AUTHENTICATION_BACKENDS = [
     'users.auth_backend.EmailAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 ROOT_URLCONF = 'auth.urls'
@@ -69,7 +73,7 @@ ROOT_URLCONF = 'auth.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/"templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,6 +90,7 @@ WSGI_APPLICATION = 'auth.wsgi.application'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',)
+
 }
 
 # Database
@@ -134,6 +139,14 @@ USE_I18N = True
 USE_TZ = True
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "My App"
+EMAIL_HOST_USER = "mittaldhruv41@gmail.com"
+EMAIL_HOST_PASSWORD = "xgxy fmwz vqnj ahzz"
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
@@ -143,9 +156,16 @@ STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
 }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
